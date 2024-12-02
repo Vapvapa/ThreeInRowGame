@@ -2,6 +2,7 @@ package ru.varvara;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * Класс, представляющий графический интерфейс игры "Три в ряд".
@@ -12,11 +13,11 @@ public class GameUI extends JFrame {
     private final GameBoard gameBoard;
     // Двумерный массив для хранения клеток в UI
     private final GameTile[][] tiles;
-    // Метка для отображения счета
+    // Метка для отображения счёта
     private final JLabel scoreLabel;
     // Переменная для хранения первой выбранной клетки при обмене
     private GameTile firstTile = null;
-    // Счет игры
+    // Счёт игры
     private int score = 0;
     // Таймер для обработки совпадений
     private Timer gameTimer;
@@ -48,8 +49,8 @@ public class GameUI extends JFrame {
         }
         add(gridPanel, BorderLayout.CENTER);  // Добавляем панель с клетками в центр окна
 
-        // Метка для отображения счета
-        scoreLabel = new JLabel("Счет: 0");
+        // Метка для отображения счёта
+        scoreLabel = new JLabel("Счёт: 0");
         add(scoreLabel, BorderLayout.NORTH);  // Добавляем метку в верхнюю часть окна
 
         // Проверка на наличие совпадений при загрузке
@@ -91,7 +92,7 @@ public class GameUI extends JFrame {
     private boolean isAdjacent(GameTile t1, GameTile t2) {
         Point p1 = getTilePosition(t1);
         Point p2 = getTilePosition(t2);
-        return Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y) == 1;
+        return Math.abs(Objects.requireNonNull(p1).x - Objects.requireNonNull(p2).x) + Math.abs(Objects.requireNonNull(p1).y - Objects.requireNonNull(p2).y) == 1;
     }
 
     /**
@@ -116,7 +117,7 @@ public class GameUI extends JFrame {
         Point p2 = getTilePosition(t2);
 
         // Меняем местами типы клеток на игровом поле
-        int temp = gameBoard.getType(p1.x, p1.y);
+        int temp = gameBoard.getType(Objects.requireNonNull(p1).x, Objects.requireNonNull(p2).y);
         gameBoard.setType(p1.x, p1.y, gameBoard.getType(p2.x, p2.y));
         gameBoard.setType(p2.x, p2.y, temp);
 
@@ -168,11 +169,11 @@ public class GameUI extends JFrame {
                 }
             }
 
-            // Если есть совпадения, удаляем их и обновляем счет
+            // Если есть совпадения, удаляем их и обновляем счёт
             if (hasMatches) {
                 gameBoard.removeMatches(toRemove);
                 score += calculateScore(toRemove);
-                scoreLabel.setText("Счет: " + score);
+                scoreLabel.setText("Счёт: " + score);
                 gameBoard.fillEmptyTiles();
                 updateUI(); // Обновляем интерфейс после изменения
             }
@@ -184,7 +185,7 @@ public class GameUI extends JFrame {
     }
 
     /**
-     * Расчет очков за удаленные клетки.
+     * Расчёт очков за удаленные клетки.
      * Каждая удаленная клетка дает 10 очков.
      */
     private int calculateScore(boolean[][] toRemove) {
