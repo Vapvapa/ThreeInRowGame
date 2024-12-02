@@ -21,6 +21,7 @@ ThreeInRowGame Ч это настольна€ игра-головоломка, реализованна€ на Java с исполь
 1.  лонируйте репозиторий:
 ```bash
 git clone https://github.com/ваш_пользователь/ThreeInRowGame.git
+```
 2. ќткройте проект в IntelliJ IDEA.
 3. ”бедитесь, что файл ThreeInRowGameSave.java находитс€ в папке src/ru/varvara.
 4. —компилируйте и запустите проект:
